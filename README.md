@@ -56,3 +56,38 @@ sant-roc-camera/
     ├── camera-upload-low.service
     └── camera-uploader.service
 
+Configuration
+Create the real environment file outside Git:
+cp .env.example .env
+
+Example:
+CAM_HOST=192.168.1.20
+CAM_USER=admin
+CAM_PASS=CHANGE_ME
+CAM_CHANNEL=1
+
+Do not commit the real .env file.
+The Lovable upload token must also remain private and must not be committed to GitHub.
+Useful Commands
+Check all camera services:
+systemctl is-active camera-live.service camera-web.service camera-upload-low.service camera-uploader.service
+
+Restart all services:
+sudo systemctl restart camera-live.service camera-web.service camera-upload-low.service camera-uploader.service
+
+Check uploader status:
+systemctl status camera-uploader.service
+
+View uploader logs:
+journalctl -u camera-uploader.service -f
+
+Check video files:
+ls -lh /home/bio/camera-live
+ls -lh /home/bio/camera-upload-low
+ls -lh /tmp/cam
+
+Automatic Startup
+The services are enabled with systemd and automatically start after Raspberry Pi reboot or power recovery.
+Remote Administration
+Remote Raspberry Pi administration is available through Tailscale.
+Example:
