@@ -1,0 +1,14 @@
+[Unit]
+Description=Camera HLS Web Server
+After=network-online.target camera-live.service
+Wants=network-online.target
+
+[Service]
+User=bio
+WorkingDirectory=/home/bio/camera-live
+ExecStart=/usr/bin/python3 -m http.server 8091 --bind 0.0.0.0
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

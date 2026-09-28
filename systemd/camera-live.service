@@ -1,0 +1,15 @@
+[Unit][Unit]
+Description=Camera 1-minute rolling HLS
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=bio
+EnvironmentFile=/home/bio/Dahua-Camera-API/.env
+Restart=always
+RestartSec=5
+ExecStart=/bin/bash -c 'exec /usr/bin/ffmpeg -nostdin -hide_banner -loglevel warning -rtsp_transport tcp -i "rtsp://${CAM_USER}:${CAM_PASS}@${CAM_HOST}:554/cam/realmonitor?channel=${CAM_CHANNEL}&subtype=0" -an -c:v copy -f hls -hls_time 2 -hls_list_size 30 -hls_flags delete_segments+omit_endlist -hls_segment_filename "/home/bio/camera-live/seg%%05d.ts" /home/bio/camera-live/stream.m3u8'
+
+[Install]
+WantedBy=multi-user.target

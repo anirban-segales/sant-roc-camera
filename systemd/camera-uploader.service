@@ -1,0 +1,14 @@
+[Unit]
+Description=Camera Clip Uploader to Lovable
+After=network-online.target camera-live.service camera-web.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=bio
+ExecStart=/home/bio/camera-uploader.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

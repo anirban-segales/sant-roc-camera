@@ -1,0 +1,15 @@
+[Unit]
+Description=Low-bitrate Dahua HLS for uploads
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=bio
+EnvironmentFile=/home/bio/Dahua-Camera-API/.env
+Restart=always
+RestartSec=5
+ExecStart=/bin/bash -c 'exec /usr/bin/ffmpeg -nostdin -hide_banner -loglevel warning -rtsp_transport tcp -i "rtsp://${CAM_USER}:${CAM_PASS}@${CAM_HOST}:554/cam/realmonitor?channel=${CAM_CHANNEL}&subtype=1" -an -c:v copy -f hls -hls_time 2 -hls_list_size 5 -hls_flags delete_segments+omit_endlist -hls_segment_filename "/home/bio/camera-upload-low/seg%%05d.ts" /home/bio/camera-upload-low/stream.m3u8'
+
+[Install]
+WantedBy=multi-user.target

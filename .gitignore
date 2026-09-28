@@ -1,0 +1,9 @@
+.env
+*.mp4
+*.ts
+*.m3u8
+*.log
+/tmp/
+camera-live/
+camera-upload-low/
+camera-snapshots/
